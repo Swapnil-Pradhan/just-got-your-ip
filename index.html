@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    async function logVisit() {
+      try {
+        // Fetch IP Address from a public API
+        const ipResponse = await fetch("https://api64.ipify.org?format=json");
+        const ipData = await ipResponse.json();
+        const userIP = ipData.ip;
+
+        // Send data to Google Apps Script
+        await fetch("https://script.google.com/macros/s/AKfycbxIKftq2MIqsRJsIBoC-oH1u2FsSGqmrRRgpFzrQLmv-dlVFGIvIO3swIhQLnBWtb4d7w/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            ip: userIP,
+            userAgent: navigator.userAgent
+          })
+        });
+        console.log("Visit logged");
+      } catch (error) {
+        console.error("Error logging visit:", error);
+      }
+    }
+
+    window.onload = logVisit;
+  </script>
+</head>
+<body>
+  <h1>i didnt have your ip btw</h1>
+</body>
+</html>
